@@ -69,7 +69,14 @@ class Timecode:
         return [self.hours,self.minutes,self.seconds,self.frames]
     
     def get_timecode(self):
-        return '{h:02d}:{m:02d}:{s:02d}:{f:02d}'         .format(h=self.hours,m=self.minutes,s=self.seconds,f=self.frames)
+        return '{h:02d}:{m:02d}:{s:02d}:{f:02d}'.format(h=self.hours,m=self.minutes,s=self.seconds,f=self.frames)
+    
+    def get_timecode_ffmpeg(self):
+        return '{h:02d}:{m:02d}:{s:06f}' \
+        .format(h=self.hours,
+                m=self.minutes,
+                s=( float( self.seconds + (self.frames/self.framerate) ) )
+               )        
     
     def get_frames(self):
         total_seconds = int((self.hours*3600) + (self.minutes*60) + (self.seconds))
